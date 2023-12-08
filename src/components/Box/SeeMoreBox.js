@@ -8,7 +8,7 @@ const SeeMoreBox = ({ imageSource, distance, title,  rating, totalReviews, onPre
     <TouchableOpacity className="items-center rounded-lg bg-white shadow-xl h-70 w-[350px] p-3  " onPress={onPress}>
       <View className="flex flex-col w-full">
         <Image source={imageSource} className="w-80 h-44 rounded-lg my-1" />
-        <Text className={`px-1 text-xs font-semibold text-center rounded-md w-1/3 my-1 ${backgroundColor}`}>{`${distance} km`}</Text>
+        <Text className={`px-1 text-xs font-semibold text-center rounded-md w-1/3 my-1 ${backgroundColor}`}>{`${distance} m`}</Text>
         <Text className="text-lg font-semibold my-1">{title}</Text>
           <View className="flex flex-row justify-end  my-1">
             <Entypo name="star" size={17} color="#FDC83D" />

@@ -8,7 +8,7 @@ const ExploreTopRated = ({ imageSource, distance, title,  rating, totalReviews, 
     <TouchableOpacity className="items-center rounded-lg bg-white shadow-xl h-60 w-56 p-3 gap-x-2 " onPress={onPress}>
       <View className="flex flex-col w-full">
         <Image source={imageSource} className="w-48 h-32 rounded-lg my-1" />
-        <Text className={`px-1 text-[9px] font-semibold text-center rounded-md w-1/3 my-1 ${backgroundColor}`}>{`${distance} km`}</Text>
+        <Text className={`px-1 text-[9px] font-semibold text-center rounded-md w-1/3 my-1 ${backgroundColor}`}>{`${distance} m`}</Text>
         <Text className="text-sm font-semibold my-1">{title}</Text>
           <View className="flex flex-row justify-end  my-1">
             <Entypo name="star" size={17} color="#FDC83D" />

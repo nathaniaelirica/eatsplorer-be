@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput, ScrollView, Image } from "react-native";
 import Background from "../components/Background";
 import { Ionicons } from '@expo/vector-icons';
@@ -9,9 +9,20 @@ import { AntDesign } from '@expo/vector-icons';
 import FoodSelectionCircle from '../components/Box/FoodSelection';
 import ExploreTopRated from "../components/Box/ExploreTopRated";
 
-import * as functions from '../functions/function.js';
+import { getLocationAsync, getNearbyRestaurants, getRestaurantsByRate, truncateLocationName } from "../../functions/functions.js";
 
 export default function Explore({ navigation }) {
+  const [location, setLocation] = useState(null);
+  const [locationName, setLocationName] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [nearbyRestaurants, setNearbyRestaurants] = useState([]);
+  const [restaurantsByRate, setRestaurantsByRate] = useState([]);
+
+  useEffect(() => {
+    getLocationAsync(setLocation, setErrorMsg, setNearbyRestaurants, setLocationName);
+    getRestaurantsByRate(setRestaurantsByRate);
+  }, []);
+
   return (
     <Background>
     <ScrollView>
@@ -24,7 +35,9 @@ export default function Explore({ navigation }) {
             </View>
           </View>
         </TouchableOpacity>
-        <Text className="text-black text-left font-inter text-lg font-semibold">location name</Text>
+          {locationName && (
+            <Text className="text-black text-left font-inter text-lg font-semibold">{truncateLocationName(locationName)}</Text>
+          )}
       </View>
       <TouchableOpacity
         onPress={() => navigation.navigate("search")}
@@ -36,7 +49,6 @@ export default function Explore({ navigation }) {
           placeholderTextColor="#8b91a3"
           editable={false} // Membuat TextInput tidak dapat diedit
         />
-
       </TouchableOpacity>
       <ScrollView horizontal={true}>
         <View className="flex flex-row">
@@ -71,112 +83,54 @@ export default function Explore({ navigation }) {
         </View>
       </ScrollView>
 
-      {/* Top Rated */}
+      {/* Near Me */}
 
-      <View className="flex-row items-center justify-between py-2 px-4">
-        <Text className="text-black text-left font-inter text-base font-bold">Top Rated</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("seemoretoprated")}>
-          <Text className="text-gray font-normal text-sm">See More</Text>
-        </TouchableOpacity>
-      </View>
-      <ScrollView horizontal={true}>
-        <View className="flex flex-row py-2 px-4 ">
-          <View className="flex flexcol py-2">
-            <ExploreTopRated
-              imageSource={require('../../assets/fast_food.jpg')}
-              distance={5} 
-              title="Burger King"
-              price={88.5}
-              rating={4.9}
-              totalReviews={2395}
-              backgroundColor="bg-yellow text-black"
-              onPress={() => navigation.navigate("restaurantpage")}
-            />
-            <ExploreTopRated
-              imageSource={require('../../assets/fast_food.jpg')}
-              distance={15} 
-              title="Blenger Burger"
-              price={88.5}
-              rating={4.9}
-              totalReviews={2395}
-              backgroundColor="bg-yellow text-black"
-            />
-          </View>
-          <View className="flex flexcol py-2">
-            <ExploreTopRated
-              imageSource={require('../../assets/sushi.jpg')}
-              distance={5} 
-              title="Sushi Tei"
-              price={88.5}
-              rating={4.9}
-              totalReviews={2395}
-              backgroundColor="bg-yellow text-black"
-            />
-            <ExploreTopRated
-              imageSource={require('../../assets/fast_food.jpg')}
-              distance={25} 
-              title="Kopi Anak Monopole"
-              price={88.5}
-              rating={4.9}
-              totalReviews={2395}
-              backgroundColor="bg-yellow text-black"
-            />
-            </View>
-        </View>
-      </ScrollView>
       <View className="flex-row items-center justify-between py-2 px-4">
         <Text className="text-black text-left font-inter text-base font-bold">Near Me</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("seemorenearme")}>
-          <Text className="text-gray font-normal text-sm">See More</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* near me */}
-
-      <ScrollView horizontal={true}>
-        <View className="flex flex-row py-2 px-4 ">
-          <View className="flex flexcol py-2">
-            <ExploreTopRated
-              imageSource={require('../../assets/fast_food.jpg')}
-              distance={5} 
-              title="Burger King"
-              price={88.5}
-              rating={4.9}
-              totalReviews={2395}
-              backgroundColor="bg-yellow text-black"
-            />
-            <ExploreTopRated
-              imageSource={require('../../assets/fast_food.jpg')}
-              distance={15} 
-              title="Blenger Burger"
-              price={88.5}
-              rating={4.9}
-              totalReviews={2395}
-              backgroundColor="bg-yellow text-black"
-            />
-          </View>
-          <View className="flex flexcol py-2">
-            <ExploreTopRated
-              imageSource={require('../../assets/sushi.jpg')}
-              distance={5} 
-              title="Sushi Tei"
-              price={88.5}
-              rating={4.9}
-              totalReviews={2395}
-              backgroundColor="bg-yellow text-black"
-            />
-            <ExploreTopRated
-              imageSource={require('../../assets/fast_food.jpg')}
-              distance={25} 
-              title="Kopi Anak Monopole"
-              price={88.5}
-              rating={4.9}
-              totalReviews={2395}
-              backgroundColor="bg-yellow text-black"
-            />
-            </View>
+          <TouchableOpacity onPress={() => navigation.navigate("seemorenearme")}>
+            <Text className="text-gray font-normal text-sm">See More</Text>
+          </TouchableOpacity>
         </View>
-      </ScrollView>
+        <ScrollView horizontal={true}>
+          {nearbyRestaurants.slice(0, 5).map((restaurant) => (
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 4 }}>
+              <View key={restaurant.id} style={{ flex: 1, flexDirection: 'column', paddingVertical: 2 }}>
+                <ExploreTopRated
+                  imageSource={require('../../assets/fast_food.jpg')}
+                  distance={restaurant.distance} 
+                  title={restaurant.title}
+                  price={88.5}
+                  rating={restaurant.rating}
+                  totalReviews={2395}
+                  backgroundColor="bg-yellow text-black"
+                /> 
+              </View>
+            </View>
+          ))}
+        </ScrollView>
+      <View className="flex-row items-center justify-between py-2 px-4">
+        <Text className="text-black text-left font-inter text-base font-bold">Top Rated</Text>
+          <TouchableOpacity onPress={() => navigation.navigate("seemoretoprated")}>
+            <Text className="text-gray font-normal text-sm">See More</Text>
+          </TouchableOpacity>
+        </View>
+        <ScrollView horizontal={true}>
+          {restaurantsByRate.slice(0, 5).map((restaurant) => (
+            <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 4 }}>
+              <View key={restaurant.id} style={{ flex: 1, flexDirection: 'column', paddingVertical: 2 }}>
+                <ExploreTopRated
+                  imageSource={require('../../assets/fast_food.jpg')}
+                  distance={restaurant.distance}  
+                  title={restaurant.title}
+                  price={88.5}
+                  rating={restaurant.rating}
+                  totalReviews={2395}
+                  backgroundColor="bg-yellow text-black"
+                />
+              </View>
+            </View>
+          ))}
+        </ScrollView>
       </ScrollView>
     </Background>
   );

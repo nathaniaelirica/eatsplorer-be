@@ -27,10 +27,11 @@ export const getRestaurantsByRate = async (setRestaurantsByRate) => {
         id,
         title: data[id].title,
         street: data[id].street,
-        rate: data[id].rate,
+        rating: data[id].rate,
+        distance: data[id].distance
       }));
 
-      const sortedRestaurants = restaurants.sort((a, b) => b.rate - a.rate);
+      const sortedRestaurants = restaurants.sort((a, b) => b.rating - a.rating);
       console.log('Restaurants sorted by rate:', sortedRestaurants);
       setRestaurantsByRate(sortedRestaurants);
     });
@@ -39,23 +40,29 @@ export const getRestaurantsByRate = async (setRestaurantsByRate) => {
   }
 };
 
-export const getNearbyRestaurants = async (latitude, longitude, setNearbyRestaurants) => {
-  try {
-    onValue(dataRef, (snapshot) => {
-      const data = snapshot.val();
-      const restaurants = Object.keys(data).map((id) => ({
-        id,
-        title: data[id].title,
-        street: data[id].street,
-        rating: data[id].rate
-      }));
-
-      console.log('Nearby Restaurants:', restaurants);
-      setNearbyRestaurants(restaurants);
-    });
-  } catch (error) {
-    console.error('Error fetching nearby restaurants:', error);
-  }
+export const getNearbyRestaurants = async (setNearbyRestaurants) => {
+    try {
+      onValue(dataRef, (snapshot) => {
+        const data = snapshot.val();
+  
+        // Extract restaurant data and include distance
+        const restaurantsWithDistance = Object.keys(data).map((id) => ({
+          id,
+          title: data[id].title,
+          street: data[id].street,
+          rating: data[id].rate,
+          distance: data[id].distance // Assuming 'distance' is the distance column
+        }));
+  
+        // Sort the array based on distance
+        const sortedRestaurants = restaurantsWithDistance.sort((a, b) => a.distance - b.distance);
+  
+        console.log('Nearby Restaurants:', sortedRestaurants);
+        setNearbyRestaurants(sortedRestaurants);
+      });
+    } catch (error) {
+      console.error('Error fetching nearby restaurants:', error);
+    }
 };
 
 export const getLocationName = async (latitude, longitude, setLocationName) => {
@@ -96,8 +103,6 @@ export const getLocationAsync = async (setLocation, setErrorMsg, setNearbyRestau
     );
 
     await getNearbyRestaurants(
-      currentLocation.coords.latitude,
-      currentLocation.coords.longitude,
       setNearbyRestaurants
     );
   } catch (error) {
@@ -127,7 +132,7 @@ export const createUser = async (email, password) => {
     }
 };  
   
-  export const signIn = async (email, password) => {
+export const signIn = async (email, password) => {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       // Signed in 

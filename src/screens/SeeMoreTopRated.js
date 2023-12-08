@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
 import { View, Text,TouchableOpacity } from "react-native";
 import { ScrollView } from "react-native";
 import Background from "../components/Background";
@@ -6,7 +6,15 @@ import { Ionicons } from '@expo/vector-icons';
 
 import SeeMoreBox from "../components/Box/SeeMoreBox";
 
+import { getRestaurantsByRate } from "../../functions/functions.js";
+
 export default function SeeMoreTopRated({ navigation }) {
+  const [restaurantsByRate, setRestaurantsByRate] = useState([]);
+
+  useEffect(() => {
+    getRestaurantsByRate(setRestaurantsByRate);
+  }, []);
+
   return (
     <Background>
     <ScrollView>
@@ -17,56 +25,18 @@ export default function SeeMoreTopRated({ navigation }) {
         <Text className="text-black text-center font-inter text-lg font-semibold mx-4 ">Top Rated</Text>
       </View>
       <View className="flex flexcol py-2 items-center justify-center">
+        {restaurantsByRate.map((restaurant) => (
         <SeeMoreBox
           imageSource={require('../../assets/fast_food.jpg')}
-          distance={5} 
-          title="Burger King"
+          distance={restaurant.distance} 
+          title={restaurant.title}
           price={88.5}
-          rating={4.9}
+          rating={restaurant.rating}
           totalReviews={2395}
           backgroundColor="bg-yellow text-black"
           onPress={() => navigation.navigate("restaurantpage")}
         />
-        <SeeMoreBox
-          imageSource={require('../../assets/sushi.jpg')}
-          distance={5} 
-          title="Sushi Tei"
-          price={88.5}
-          rating={4.9}
-          totalReviews={2395}
-          backgroundColor="bg-yellow text-black"
-          onPress={() => navigation.navigate("restaurantpage")}
-        />
-        <SeeMoreBox
-          imageSource={require('../../assets/fried_rice.jpg')}
-          distance={5} 
-          title="Solaria"
-          price={88.5}
-          rating={4.9}
-          totalReviews={2395}
-          backgroundColor="bg-yellow text-black"
-          onPress={() => navigation.navigate("restaurantpage")}
-        />
-        <SeeMoreBox
-          imageSource={require('../../assets/bakery.jpg')}
-          distance={5} 
-          title="Maison Feerie"
-          price={88.5}
-          rating={4.9}
-          totalReviews={2395}
-          backgroundColor="bg-yellow text-black"
-          onPress={() => navigation.navigate("restaurantpage")}
-        />
-        <SeeMoreBox
-          imageSource={require('../../assets/bakso.jpg')}
-          distance={0} 
-          title="Bakso Bio Yummy"
-          price={88.5}
-          rating={5.1}
-          totalReviews={112395}
-          backgroundColor="bg-yellow text-black"
-          onPress={() => navigation.navigate("restaurantpage")}
-        />
+        ))}
       </View>
     </ScrollView>  
     </Background>
