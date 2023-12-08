@@ -9,6 +9,8 @@ import { AntDesign } from '@expo/vector-icons';
 import FoodSelectionCircle from '../components/Box/FoodSelection';
 import ExploreTopRated from "../components/Box/ExploreTopRated";
 
+import * as functions from '../functions/function.js';
+
 export default function Explore({ navigation }) {
   return (
     <Background>
