@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, TextInput, ScrollView, Image } from "react-native";
+import { View, Text, TouchableOpacity, TextInput, ScrollView, Image, StyleSheet } from "react-native";
 import Background from "../components/Background";
 import { Ionicons } from '@expo/vector-icons';
 // import { Entypo } from '@expo/vector-icons'; 
@@ -9,7 +9,7 @@ import { AntDesign } from '@expo/vector-icons';
 import FoodSelectionCircle from '../components/Box/FoodSelection';
 import ExploreTopRated from "../components/Box/ExploreTopRated";
 
-import { getLocationAsync, getNearbyRestaurants, getRestaurantsByRate, truncateLocationName } from "../../functions/functions.js";
+import { getLocationAsync, getNearbyRestaurants, getRestaurantsByRate, truncateLocationName, getRestaurantsByCuisine, selectedCategory } from "../../functions/functions.js";
 
 export default function Explore({ navigation }) {
   const [location, setLocation] = useState(null);
@@ -17,12 +17,35 @@ export default function Explore({ navigation }) {
   const [errorMsg, setErrorMsg] = useState(null);
   const [nearbyRestaurants, setNearbyRestaurants] = useState([]);
   const [restaurantsByRate, setRestaurantsByRate] = useState([]);
+  const [restaurantsByCuisine, setRestaurantsByCuisine] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(); // Atau nilai default yang sesuai
+  // const categories = ['Kafe', 'Barat', 'Jepang', 'Indonesia', 'Dessert', 'Toko Roti dan Kue'];
+
 
   useEffect(() => {
-    getLocationAsync(setLocation, setErrorMsg, setNearbyRestaurants, setLocationName);
-    getRestaurantsByRate(setRestaurantsByRate);
-  }, []);
+    const fetchData = async () => {
+      try {
+        getLocationAsync(setLocation, setErrorMsg, setNearbyRestaurants, setLocationName);
+        getRestaurantsByRate(setRestaurantsByRate);
+        getRestaurantsByCuisine(setRestaurantsByCuisine, selectedCategory);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, [selectedCategory]);
 
+  const categories = [
+    { id: 'Indonesian', text: 'Indonesian', imageSource: require('../../assets/fried_rice.jpg') },
+    { id: 'Japanese', text: 'Japanese', imageSource: require('../../assets/sushi.jpg') },
+    { id: 'Western', text: 'Western', imageSource: require('../../assets/fast_food.jpg') },
+    { id: 'Korean', text: 'Korean', imageSource: require('../../assets/Korean.jpg') },
+    { id: 'Bakery', text: 'Bakery', imageSource: require('../../assets/bakery.jpg') },
+    { id: 'Cafe', text: 'Cafe', imageSource: require('../../assets/beverages.jpg') },
+    { id: 'Dessert', text: 'Dessert', imageSource: require('../../assets/sweets.jpg') },
+  ];
+  
   return (
     <Background>
     <ScrollView>
@@ -51,36 +74,41 @@ export default function Explore({ navigation }) {
         />
       </TouchableOpacity>
       <ScrollView horizontal={true}>
+      <ScrollView horizontal={true}>
         <View className="flex flex-row">
-          <FoodSelectionCircle onPress={() => navigation.navigate("indonesianpage")}
-            imageSource={require('../../assets/fried_rice.jpg')}
-            buttonText="Indonesian"
-          />
-          <FoodSelectionCircle onPress={() => navigation.navigate("japanesepage")}
-            imageSource={require('../../assets/sushi.jpg')}
-            buttonText="Japanese"
-          />
-          <FoodSelectionCircle onPress={() => navigation.navigate("westernpage")}
-            imageSource={require('../../assets/fast_food.jpg')}
-            buttonText="Western"
-          />
-          <FoodSelectionCircle onPress={() => navigation.navigate("koreanpage")}
-            imageSource={require('../../assets/Korean.jpg')}
-            buttonText="Korean"
-          />
-          <FoodSelectionCircle onPress={() => navigation.navigate("bakerypage")}
-            imageSource={require('../../assets/bakery.jpg')}
-            buttonText="Bakery"
-          />
-          <FoodSelectionCircle onPress={() => navigation.navigate("cafepage")}
-            imageSource={require('../../assets/beverages.jpg')}
-            buttonText="Cafe"
-          />
-          <FoodSelectionCircle onPress={() => navigation.navigate("dessertpage")}
-            imageSource={require('../../assets/sweets.jpg')}
-            buttonText="Dessert"
-          />
+          {categories.map((category) => (
+            <FoodSelectionCircle
+              key={category.id}
+              onPress={() => {
+                setSelectedCategory((prevCategory) => {
+                  console.log('prevCategory:', prevCategory);
+                  console.log('category.text:', category.text);
+                  return prevCategory === category.text ? null : category.text;
+                });
+                navigation.navigate(`${category.id}page`);
+              }}
+              imageSource={category.imageSource}
+              buttonText={category.text}
+            />
+          ))}
         </View>
+      </ScrollView>
+      {/* <ScrollView horizontal={true}>
+        <View className="flex flex-row">
+          {categories.map((category) => (
+            <FoodSelectionCircle
+              key={category.id}
+              onPress={() => {
+                setSelectedCategory(category.text);
+                navigation.navigate(`${category.id}page`);
+              }}
+              imageSource={category.imageSource}
+              buttonText={category.text}
+            />
+          ))}
+        </View>
+      </ScrollView> */}
+
       </ScrollView>
 
       {/* Near Me */}
