@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue } from "firebase/database";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
@@ -17,6 +18,12 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const dataRef = ref(db, '/');
 const auth = getAuth(app);
+
+useEffect(() => {
+  // Memanggil fungsi getRestaurantsByCuisine setelah nilai selectedCategory dijamin terupdate
+  getRestaurantsByCuisine(setRestaurantsByCuisine, selectedCategory);
+}, [selectedCategory]);
+
 
 export const getRestaurantsByRate = async (setRestaurantsByRate) => {
   try {
@@ -103,7 +110,7 @@ export const getLocationAsync = async (setLocation, setErrorMsg, setNearbyRestau
     );
 
     await getNearbyRestaurants(
-      setNearbyRestaurants
+      setNearbyRestaurants 
     );
   } catch (error) {
     console.error('Error getting location:', error);
@@ -145,4 +152,87 @@ export const signIn = async (email, password) => {
       console.error("Login failed:", errorCode, errorMessage);
       return { user: null, errorCode, errorMessage };
     }
+};
+
+// export const getRestaurantsByCuisine = async (setRestaurantsByCuisine, selectedCategoryValue) => {
+//   try {
+//     onValue(dataRef, (snapshot) => {
+//       const data = snapshot.val();
+
+//       const restaurants = Object.keys(data).map((id) => ({
+//         id,
+//         title: data[id].title,
+//         street: data[id].street,
+//         cuisine: data[id].cuisine,
+//       }));
+
+//       // Memanggil fungsi selectCategory dengan menyediakan setRestaurantsByCuisine dan selectedCategory
+//       selectCategory(restaurants, setRestaurantsByCuisine, selectedCategoryValue);
+//     });
+//   } catch (error) {
+//     console.error('Error fetching restaurants by cuisine:', error);
+//   }
+// };
+
+// bisa
+// export const getRestaurantsByCuisine = async (setRestaurantsByCuisine, selectedCategory) => {
+//   try {
+//     onValue(dataRef, (snapshot) => {
+//       const data = snapshot.val();
+
+//       const restaurants = Object.keys(data).map((id) => ({
+//         id,
+//         title: data[id].title,
+//         street: data[id].street,
+//         cuisine: data[id].cuisine,
+//       }));
+
+//       // Memanggil fungsi selectCategory dengan menyediakan setRestaurantsByCuisine dan selectedCategory
+//       selectCategory(restaurants, setRestaurantsByCuisine, selectedCategory);
+//     });
+//   } catch (error) {
+//     console.error('Error fetching restaurants by cuisine:', error);
+//   }
+// };
+
+export const selectCategory = (restaurants, setRestaurantsByCuisine, selectedCategoryValue) => {
+  
+  console.log('Selected Category in selectCategory:', selectedCategoryValue);
+
+  const filteredRestaurants = restaurants.filter(
+    (restaurant) =>
+      selectedCategoryValue ? restaurant.cuisine === selectedCategoryValue : true
+  );
+
+  console.log('Restaurants filtered by cuisine:', filteredRestaurants);
+  setRestaurantsByCuisine(filteredRestaurants);
+};
+
+export const getRestaurantsByCuisine = async (setRestaurantsByCuisine, selectedCategory) => {
+  try {
+    onValue(dataRef, (snapshot) => {
+      const data = snapshot.val();
+
+      const restaurants = Object.keys(data).map((id) => ({
+        id,
+        title: data[id].title,
+        street: data[id].street,
+        cuisine: data[id].cuisine,
+      }));
+
+      console.log('Before calling selectCategory. Selected Category:', selectedCategory);
+
+      // Pastikan selectedCategory tidak undefined sebelum memanggil selectCategory
+      if (selectedCategory !== undefined) {
+        // Memanggil fungsi selectCategory dengan menyediakan setRestaurantsByCuisine dan selectedCategory
+        selectCategory(restaurants, setRestaurantsByCuisine, selectedCategory);
+      } else {
+        console.log('Selected Category is undefined. Cannot filter restaurants.');
+      }
+
+      console.log('After calling selectCategory. Selected Category:', selectedCategory);
+    });
+  } catch (error) {
+    console.error('Error fetching restaurants by cuisine:', error);
+  }
 };

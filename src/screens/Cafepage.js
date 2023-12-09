@@ -1,72 +1,47 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
+// import * as React from "react";
 import { View, Text, ScrollView,TouchableOpacity } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import Background from "../components/Background";
+import Background from "../components/Background.js";
 import { Ionicons } from '@expo/vector-icons';
 
-import SeeMoreBox from "../components/Box/SeeMoreBox";
+import SeeMoreBox from "../components/Box/SeeMoreBox.js";
+import { getRestaurantsByCuisine, selectedCategory } from "../../functions/functions.js";
+
 
 export default function Cafepage({ navigation }) {
+  const [restaurantsByCuisine, setRestaurantsByCuisine] = useState([]);
+  const [selectedCategoryState, setSelectedCategoryState] = useState("Kafe"); // Ubah nama state
+  // const categories = ['Kafe', 'Barat', 'Jepang', 'Indonesia', 'Dessert', 'Toko Roti dan Kue'];
+
+
+  useEffect(() => {
+    getRestaurantsByCuisine(setRestaurantsByCuisine, selectedCategoryState);
+  }, [selectedCategoryState]);
+
   return (
     <Background>
-          <ScrollView>
-      <View className="flex flex-row m-1 w-full">
-        <TouchableOpacity className="content-start mt-1" onPress={() => navigation.navigate("main")}>
-          <Ionicons name="arrow-back" size={25} color="black" />
-        </TouchableOpacity>
-        <Text className="text-black text-center font-inter text-lg font-semibold mx-4 ">Cafe</Text>
-      </View>
-      <View className="flex flexcol py-2 items-center justify-center">
-        <SeeMoreBox
-          imageSource={require('../../assets/fast_food.jpg')}
-          distance={5} 
-          title="Burger King"
-          price={88.5}
-          rating={4.9}
-          totalReviews={2395}
-          backgroundColor="bg-yellow text-black"
-          onPress={() => navigation.navigate("restaurantpage")}
-        />
-        <SeeMoreBox
-          imageSource={require('../../assets/sushi.jpg')}
-          distance={5} 
-          title="Sushi Tei"
-          price={88.5}
-          rating={4.9}
-          totalReviews={2395}
-          backgroundColor="bg-yellow text-black"
-          onPress={() => navigation.navigate("restaurantpage")}
-        />
-        <SeeMoreBox
-          imageSource={require('../../assets/fried_rice.jpg')}
-          distance={5} 
-          title="Solaria"
-          price={88.5}
-          rating={4.9}
-          totalReviews={2395}
-          backgroundColor="bg-yellow text-black"
-          onPress={() => navigation.navigate("restaurantpage")}
-        />
-        <SeeMoreBox
-          imageSource={require('../../assets/bakery.jpg')}
-          distance={5} 
-          title="Maison Feerie"
-          price={88.5}
-          rating={4.9}
-          totalReviews={2395}
-          backgroundColor="bg-yellow text-black"
-          onPress={() => navigation.navigate("restaurantpage")}
-        />
-        <SeeMoreBox
-          imageSource={require('../../assets/bakso.jpg')}
-          distance={0} 
-          title="Bakso Bio Yummy"
-          price={88.5}
-          rating={5.1}
-          totalReviews={112395}
-          backgroundColor="bg-yellow text-black"
-          onPress={() => navigation.navigate("restaurantpage")}
-        />
+      <ScrollView>
+        <View className="flex flex-row m-1 w-full">
+          <TouchableOpacity className="content-start mt-1" onPress={() => navigation.navigate("main")}>
+            <Ionicons name="arrow-back" size={25} color="black" />
+          </TouchableOpacity>
+          <Text className="text-black text-center font-inter text-lg font-semibold mx-4 ">Cafe</Text>
+        </View>
+        <View className="flex flexcol py-2 items-center justify-center">
+          {restaurantsByCuisine.map((restaurant) => (
+            <SeeMoreBox
+              key={restaurant.id}
+              imageSource={require('../../assets/fast_food.jpg')}
+              distance={restaurant.distance} 
+              title={restaurant.title}
+              price={88.5}
+              rating={restaurant.rating}
+              totalReviews={2395}
+              backgroundColor="bg-yellow text-black"
+              onPress={() => navigation.navigate("restaurantpage")}
+            />
+            ))}
       </View>
     </ScrollView> 
     <StatusBar style="auto" />
