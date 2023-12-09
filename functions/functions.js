@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue } from "firebase/database";
+import { getDatabase, ref, onValue, orderByChild, equalTo, once } from "firebase/database";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import * as Location from 'expo-location';
 
@@ -145,4 +145,52 @@ export const signIn = async (email, password) => {
       console.error("Login failed:", errorCode, errorMessage);
       return { user: null, errorCode, errorMessage };
     }
+};
+
+export const handleSearch = (query, setSearchResults) => {
+  try {
+    onValue(
+      orderByChild(dataRef, 'title'),
+      equalTo(dataRef, query),
+      (snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+
+          // Log the entire data for debugging purposes
+          console.log("Data from Firebase:", data);
+
+          const resultsArray = Object.keys(data || {}).map(id => ({
+            id,
+            title: data[id]?.title || "",
+            // Add other properties if needed
+          }));
+
+          // Log the search query for debugging
+          console.log("Search Query:", query);
+
+          // Log the filtered results
+          const filteredResults = resultsArray.filter(restaurant => {
+            const isMatch = restaurant.title.toLowerCase().includes(query.toLowerCase());
+            console.log(`Checking: "${restaurant.title}" - Match: ${isMatch}`);
+            return isMatch;
+          });
+
+          console.log("Filtered results:", filteredResults);
+
+          if (filteredResults.length > 0) {
+            setSearchResults(filteredResults);
+            console.log("Search results:", filteredResults);
+          } else {
+            setSearchResults([]);
+            console.log("Restoran tidak ditemukan");
+          }
+        } else {
+          setSearchResults([]);
+          console.log("Restoran tidak ditemukan");
+        }
+      }
+    );
+  } catch (error) {
+    console.error("Error searching:", error);
+  }
 };
