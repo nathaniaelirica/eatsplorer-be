@@ -4,13 +4,13 @@ import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } f
 import * as Location from 'expo-location';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB6SYlg6V2C3NsraWQ6oQDrJrBt7-KjST0",
-    authDomain: "fp-mobile-8d7ee.firebaseapp.com",
-    databaseURL: "https://fp-mobile-8d7ee-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "fp-mobile-8d7ee",
-    storageBucket: "fp-mobile-8d7ee.appspot.com",
-    messagingSenderId: "497811191657",
-    appId: "1:497811191657:web:ba48369e63936e9577eff8"
+  apiKey: "AIzaSyCNicYBjLGdDwhqKbhWLgJQbZ1v5c0KfmE",
+  authDomain: "storage-4d35e.firebaseapp.com",
+  databaseURL: "https://storage-4d35e-default-rtdb.firebaseio.com",
+  projectId: "storage-4d35e",
+  storageBucket: "storage-4d35e.appspot.com",
+  messagingSenderId: "162934766906",
+  appId: "1:162934766906:web:211d547dbd6d404ffba403"
 };
 
 const app = initializeApp(firebaseConfig);
