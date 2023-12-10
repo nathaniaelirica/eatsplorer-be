@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, onValue, orderByChild, equalTo, once } from "firebase/database";
+import { initializeApp, firebase } from "firebase/app";
+import { getDatabase, ref, onValue, orderByChild, equalTo, once, query, startAt, endAt } from "firebase/database";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import * as Location from 'expo-location';
 
@@ -18,11 +18,6 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const dataRef = ref(db, '/');
 const auth = getAuth(app);
-
-useEffect(() => {
-  // Memanggil fungsi getRestaurantsByCuisine setelah nilai selectedCategory dijamin terupdate
-  getRestaurantsByCuisine(setRestaurantsByCuisine, selectedCategory);
-}, [selectedCategory]);
 
 
 export const getRestaurantsByRate = async (setRestaurantsByRate) => {
@@ -154,51 +149,37 @@ export const signIn = async (email, password) => {
     }
 };
 
-export const handleSearch = (query, setSearchResults) => {
+
+export const handleSearch = (searchQuery, setSearchResults) => {
   try {
-    onValue(
-      orderByChild(dataRef, 'title'),
-      equalTo(dataRef, query),
-      (snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.val();
+    // Convert the search query to lowercase (for case-insensitive search)
+    const lowerSearchQuery = searchQuery.toLowerCase();
 
-          // Log the entire data for debugging purposes
-          console.log("Data from Firebase:", data);
+    const searchRef = query(dataRef, orderByChild('title'));
 
-          const resultsArray = Object.keys(data || {}).map(id => ({
-            id,
-            title: data[id]?.title || "",
-            // Add other properties if needed
-          }));
+    // Use startAt and endAt to perform a partial text search
+    onValue(searchRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
 
-          // Log the search query for debugging
-          console.log("Search Query:", query);
+        // Filter the data based on the search query
+        const searchResults = Object.keys(data).filter(id => {
+          const title = data[id].title.toLowerCase();
+          return title.includes(lowerSearchQuery);
+        }).map(id => ({
+          title: data[id].title,
+        }));
 
-          // Log the filtered results
-          const filteredResults = resultsArray.filter(restaurant => {
-            const isMatch = restaurant.title.toLowerCase().includes(query.toLowerCase());
-            console.log(`Checking: "${restaurant.title}" - Match: ${isMatch}`);
-            return isMatch;
-          });
-
-          console.log("Filtered results:", filteredResults);
-
-          if (filteredResults.length > 0) {
-            setSearchResults(filteredResults);
-            console.log("Search results:", filteredResults);
-          } else {
-            setSearchResults([]);
-            console.log("Restoran tidak ditemukan");
-          }
-        } else {
-          setSearchResults([]);
-          console.log("Restoran tidak ditemukan");
-        }
+        setSearchResults(searchResults);
+        console.log("Search Results:", searchResults);
+      } else {
+        setSearchResults([]);
+        console.log("No results found for:", searchQuery);
       }
-    );
+    });
   } catch (error) {
-    console.error("Error searching:", error);
+    console.error("Error in search:", error);
+    setSearchResults([]);
   }
 };
 
