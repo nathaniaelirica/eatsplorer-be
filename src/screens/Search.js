@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Background from "../components/Background";
 import { handleSearch } from "../../functions/functions.js";
 
+import { Feather } from '@expo/vector-icons';
+
 import SearchBox from "../components/Box/SearchBox";
 
 export default function Search({ navigation }) {
@@ -40,10 +42,10 @@ export default function Search({ navigation }) {
         </View>
 
         <TouchableOpacity
-          className="flex-row items-center justify-center p-3 rounded-lg m-6 bg-white border border-[#8b91a3]">
+          className="flex-row items-center justify-center p-3 w-80 h-12 rounded-lg mx-6 my-3 bg-white border border-[#8b91a3]">
           <Ionicons name="search-outline" size={22} color="black" />
           <TextInput
-            className="flex-1 ml-8 text-[#8b91a3] text-base font-light"
+            className="flex-1 ml-3 text-[#8b91a3] text-sm mb-1 font-light"
             placeholder="Cari restoran atau menu makanan"
             placeholderTextColor="#8b91a3"
             value={query}
@@ -51,6 +53,7 @@ export default function Search({ navigation }) {
             editable={true}
             onSubmitEditing={onSearch}
           />
+           <Feather name="x" size={24} color="black" />
         </TouchableOpacity>
 
         <View className="flex flex-col py-2 items-center justify-center">
@@ -60,10 +63,8 @@ export default function Search({ navigation }) {
               key={result.id}
               distance={5} 
               title={result.title}
-              price={88.5}
               rating={result.rating}
               totalReviews={2395}
-              backgroundColor="bg-yellow text-black"
               onPress={() => navigation.navigate("restaurantpage")}
             /> 
           ))}
