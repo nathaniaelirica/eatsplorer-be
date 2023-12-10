@@ -69,43 +69,43 @@ function StackNavigator() {
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="indonesianpage"
+                    name="Indonesianpage"
                     component={Indonesianpage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="japanesepage"
+                    name="Japanesepage"
                     component={Japanesepage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="westernpage"
+                    name="Westernpage"
                     component={Westernpage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="koreanpage"
+                    name="Koreanpage"
                     component={Koreanpage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="bakerypage"
+                    name="Bakerypage"
                     component={Bakerypage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="cafepage"
+                    name="Cafepage"
                     component={Cafepage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="dessertpage"
+                    name="Dessertpage"
                     component={Dessertpage}
                 />
             </RootStack.Group>
