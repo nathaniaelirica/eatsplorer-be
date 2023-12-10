@@ -24,7 +24,7 @@ export default function Login({ navigation }) {
       if (loginResult.user) {
         // Handle login berhasil
         setSuccessMessage('Login successful!');
-        // Navigasi atau logika setelah login berhasil
+        navigation.navigate("review2"); // Move the navigation here
       } else {
         setError(`Error: ${loginResult.errorCode} - ${loginResult.errorMessage}`);
       }
@@ -69,7 +69,6 @@ export default function Login({ navigation }) {
                 <TextInput
                   className="p-4 bg-[#EFF1F3] text-black rounded-2xl mb-3"
                   placeholder="Email"
-                  // value="john@gmail.com"
                   value={email}
                   onChangeText={(text) => setEmail(text)}
                 />
@@ -78,18 +77,28 @@ export default function Login({ navigation }) {
                   className="p-4 bg-[#EFF1F3] text-black rounded-2xl"
                   secureTextEntry
                   placeholder="Password"
-                  // value="test12345"
                   value={password}
                   onChangeText={(text) => setPassword(text)}
                 />
+                {/* Display success message */}
+                {successMessage && (
+                  <View className="mt-2">
+                    <Text style={{ color: 'green' }}>{successMessage}</Text>
+                  </View>
+                )}
 
+                {/* Display error message */}
+                {error && (
+                  <View className="mt-2">
+                    <Text style={{ color: 'red' }}>{error}</Text>
+                  </View>
+                )}
                 {/* button login */}
                 <View className="mt-4">
                   <TouchableOpacity
                     className="mt-4 py-3 bg-[#FFCF00] rounded-xl"
                     onPress={() => {
-                      handleLogin(); // Call the handleLogin function
-                      navigation.navigate("review2");
+                      handleLogin();
                     }}>
                     <Text className="text-xl font-bold text-center items-center justify-center text-white">
                       Login
