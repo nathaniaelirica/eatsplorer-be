@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  KeyboardAvoidingView
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -34,7 +35,7 @@ export default function Login({ navigation }) {
   };
 
   return (
-    // <LoginBackground>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <View>
       <ScrollView>
         <View className="relative bg-[#FEDB71]">
@@ -51,17 +52,17 @@ export default function Login({ navigation }) {
             </TouchableOpacity>
           </View>
 
-          <View className="flex-row justify-center top-48">
+          <View className="flex-row justify-center top-36">
             <Image
               source={require("../../assets/login3.png")}
-              style={{ width: 300, height: 200 }}
+              style={{ width: 350, height: 250 }}
             />
           </View>
 
           {/* coba */}
           <View
             style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-            className="flex-1 bg-white px-8 pt-8 mt-72 ">
+            className="flex-1 bg-white px-8 pt-8 mt-44">
             {/* kolom email dkk */}
             <View className="flex flex-col">
               <View className="form space-y-2">
@@ -122,6 +123,6 @@ export default function Login({ navigation }) {
         </View>
       </ScrollView>
     </View>
-    // </LoginBackground>
+    </KeyboardAvoidingView>
   );
 }
