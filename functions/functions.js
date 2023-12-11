@@ -172,6 +172,9 @@ export const handleSearch = (searchQuery, setSearchResults) => {
           return title.includes(lowerSearchQuery);
         }).map(id => ({
           title: data[id].title,
+          imageUrl: data[id].imageUrl,
+          rating: data[id].rate,
+          distance: data[id].distance
         }));
 
         setSearchResults(searchResults);

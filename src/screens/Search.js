@@ -59,12 +59,12 @@ export default function Search({ navigation }) {
         <View className="flex flex-col py-2 items-center justify-center">
           {searchResults.map((result, id) => (
             <SearchBox
-              imageSource={require('../../assets/fast_food.jpg')}
+              imageSource={{ uri: result.imageUrl }}
               key={result.id}
-              distance={5} 
+              distance={result.distance} 
               title={result.title}
               rating={result.rating}
-              totalReviews={2395}
+              // totalReviews={2395}
               onPress={() => navigation.navigate("restaurantpage")}
             /> 
           ))}

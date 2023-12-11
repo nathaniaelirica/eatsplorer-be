@@ -60,7 +60,7 @@ export default function ReviewSeemore({ navigation }) {
                 <BoxReview 
         imageSource={require("../../assets/nopic.png")}
         name="Keisya Nabila"
-        cust_rating={4.9}
+        // cust_rating={4.9}
         cust_review="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pellentesque tempor auctor. Nullam id cursus ligula."
         />
 
@@ -68,7 +68,7 @@ export default function ReviewSeemore({ navigation }) {
                 <BoxReview 
         imageSource={require("../../assets/nopic.png")}
         name="Keisya Nabila"
-        cust_rating={4.9}
+        // cust_rating={4.9}
         cust_review="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pellentesque tempor auctor. Nullam id cursus ligula."
         />
         {/* kolom */}

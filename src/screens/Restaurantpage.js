@@ -237,14 +237,14 @@ export default function Restaurantpage({ route, navigation }) {
                   <BoxRestoCustomerReview
                     imageSource={require("../../assets/nopic.png")}
                     name="Keisya Nabila"
-                    cust_rating={4.9}
+                    // cust_rating={4.9}
                     cust_review="Saya sungguh menikmati pengalaman rasa yang luar biasa ketika pertama kali menyentuh lidah saya."
                   />
                   {/* review 2 */}
                   <BoxRestoCustomerReview
                     imageSource={require("../../assets/nopic.png")}
                     name="Nathania Ellirica"
-                    cust_rating={4.5}
+                    // cust_rating={4.5}
                     cust_review=" Saya bisa merasakan kedalaman dan kompleksitas cita rasa, memberikan penghormatan kepada bahan-bahan dasar yang digunakan."
                   />
 
@@ -252,7 +252,7 @@ export default function Restaurantpage({ route, navigation }) {
                   <BoxRestoCustomerReview
                     imageSource={require("../../assets/nopic.png")}
                     name="Annisa Rahmapuri"
-                    cust_rating={4.7}
+                    // cust_rating={4.7}
                     cust_review="Rasanya lebih dari sekadar memenuhi kebutuhan fisik,makanan ini menjadi perjalanan sensorik dan emosional yang memikat."
                   />
                 </View>

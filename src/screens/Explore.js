@@ -106,7 +106,7 @@ export default function Explore({ navigation }) {
             <View className="flex flex-row py-2 px-1">
               <View key={restaurant.id} className="flex flexcol py-2">
                 <ExploreTopRated
-                  imageSource={require('../../assets/fast_food.jpg')}
+                  imageSource={{ uri: restaurant.imageUrl }}
                   distance={restaurant.distance} 
                   title={restaurant.title}
                   price={88.5}

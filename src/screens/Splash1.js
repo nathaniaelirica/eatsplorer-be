@@ -1,25 +1,55 @@
-import { View, Text, SafeAreaView, Image } from 'react-native'
-import React from 'react'
-// import LogoPNG from '../../../assets/logo.png'
-import { useNavigation } from "@react-navigation/native";
 
-export default function Splash1() {
-    const navigation = useNavigation();
+import React, { useEffect, useRef } from 'react';
+import { View, Text, SafeAreaView, Image, Animated, Easing } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-    React.useEffect(() => {
-        setTimeout(() => {
-            navigation.navigate('splash2')
-        }, 2000)
-    }, []);
+const Splash1 = () => {
+  const navigation = useNavigation();
+  const translateYAnim = useRef(new Animated.Value(0)).current;
 
-    return (
-        <SafeAreaView className="flex flex-col items-center justify-center flex-1 bg- bg-[#FEDB71] gap-y-2">
-           <Image
-            source={require("../../assets/logo2.png")}
-            className="w-64 h-64 top-0"
-          />
-            <Text className="mt-4 text-3xl italic font-bold text-[#C66200]">Eatsplorer!</Text>
-            <Text className="font-medium text-base text-white">Where Every Bite Tells a Story</Text>
-        </SafeAreaView>
-    )
-}
+  useEffect(() => {
+    // Bounce animation
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(translateYAnim, {
+          toValue: 10,
+          duration: 500,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+        Animated.timing(translateYAnim, {
+          toValue: -10,
+          duration: 500,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+      ])
+    ).start();
+
+    // Navigate to 'splash2' after a delay
+    const timeout = setTimeout(() => {
+      navigation.navigate('splash2');
+    }, 7000);
+
+    // Clear the timeout to avoid navigation if the component unmounts
+    return () => clearTimeout(timeout);
+  }, [translateYAnim, navigation]);
+
+  return (
+    <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#FEDB71' }}>
+      <Animated.Image
+        source={require('../../assets/logo2.png')}
+        style={{
+          width: 200,
+          height: 200,
+          transform: [{ translateY: translateYAnim }],
+        }}
+      />
+      <Text style={{ marginTop: 20, fontSize: 24, fontWeight: 'bold', fontStyle: 'italic', color: '#C66200' }}>Eatsplorer!</Text>
+      <Text style={{ marginTop: 10, fontSize: 16, color: 'white' }}>Where Every Bite Tells a Story</Text>
+    </SafeAreaView>
+  );
+};
+
+export default Splash1;
+
