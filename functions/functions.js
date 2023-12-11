@@ -55,7 +55,9 @@ export const getNearbyRestaurants = async (setNearbyRestaurants) => {
           title: data[id].title,
           street: data[id].street,
           rating: data[id].rate,
-          distance: data[id].distance // Assuming 'distance' is the distance column
+          distance: data[id].distance,
+          imageUrl: data[id].imageUrl,
+          cuisine: data[id].cuisine // Assuming 'distance' is the distance column
         }));
   
         // Sort the array based on distance
@@ -207,6 +209,7 @@ export const getRestaurantsByCuisine = async (setRestaurantsByCuisine, selectedC
         id,
         title: data[id].title,
         street: data[id].street,
+        distance: data[id].distance,
         cuisine: data[id].cuisine,
       }));
 
@@ -227,49 +230,52 @@ export const getRestaurantsByCuisine = async (setRestaurantsByCuisine, selectedC
   }
 };
 
-// export const fetchDataFromFirebase = (setRestaurants) => {
+// export const toggleBookmark = (restaurant, bookmarkedRestaurants, setBookmarkedRestaurants) => {
 //   try {
-//     onValue(dataRef, (snapshot) => {
-//       const data = snapshot.val();
-
-//       const restaurantsData = Object.keys(data).map((id) => ({
-//         id,
-//         title: data[id].title,
-//         street: data[id].street,
-//         cuisine: data[id].cuisine,
-//       }));
-
-//       setRestaurants(restaurantsData);
-//     });
+//     const isBookmarked = bookmarkedRestaurants.some((r) => r.id === restaurant.id);
+//     if (isBookmarked) {
+//       // Unbookmark the restaurant
+//       const updatedBookmarks = bookmarkedRestaurants.filter((r) => r.id !== restaurant.id);
+//       setBookmarkedRestaurants(updatedBookmarks);
+//     } else {
+//       // Bookmark the restaurant
+//       const updatedBookmarks = [...bookmarkedRestaurants, restaurant];
+//       setBookmarkedRestaurants(updatedBookmarks);
+//     }
 //   } catch (error) {
-//     console.error('Error fetching data from Firebase:', error);
+//     console.error('Error:', error);
 //   }
 // };
 
 export const toggleBookmark = (restaurant, bookmarkedRestaurants, setBookmarkedRestaurants) => {
   try {
-    onValue(dataRef, (snapshot) => {
+    onValue (dataRef, (snapshot) => {
       const data = snapshot.val();
 
-      const restaurantsData = Object.keys(data).map((id) => ({
+      const restaurants = Object.keys(data).map((id) => ({
         id,
         title: data[id].title,
         street: data[id].street,
-        cuisine: data[id].cuisine,
+        rating: data[id].rate,
+        distance: data[id].distance,
+        imageUrl: data[id].imageUrl,
+        cuisine: data[id].cuisine
       }));
 
-      const isBookmarked = bookmarkedRestaurants.some((r) => r.id === restaurant.id);
+      const isBookmarked = bookmarkedRestaurants.some((r) => r.title === restaurant.title);
       if (isBookmarked) {
-        // Unbookmark the restaurant
-        const updatedBookmarks = bookmarkedRestaurants.filter((r) => r.id !== restaurant.id);
+        // Hapus restoran dari bookmark berdasarkan judul
+        const updatedBookmarks = bookmarkedRestaurants.filter((r) => r.title !== restaurant.title);
         setBookmarkedRestaurants(updatedBookmarks);
+        console.log(`Removed bookmark for restaurant: ${restaurant.title}`);
       } else {
-        // Bookmark the restaurant
+        // Tambahkan restoran ke bookmark berdasarkan judul
         const updatedBookmarks = [...bookmarkedRestaurants, restaurant];
         setBookmarkedRestaurants(updatedBookmarks);
+        console.log(`Bookmarked restaurant: ${restaurant.title}`);
       }
     });
   } catch (error) {
-    console.error('Error :', error);
+    console.error('Error:', error);
   }
 };

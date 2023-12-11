@@ -41,23 +41,20 @@ export default function ReviewSeemore({ navigation }) {
         <BoxReview 
         imageSource={require("../../assets/nopic.png")}
         name="Keisya Nabila"
-        cust_rating={4.9}
-        cust_review="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pellentesque tempor auctor. Nullam id cursus ligula."
+        cust_review="Saya bisa merasakan kedalaman dan kompleksitas cita rasa, memberikan penghormatan kepada bahan-bahan dasar yang digunakan."
         />
                 {/* review 2 */}
                 <BoxReview 
         imageSource={require("../../assets/nopic.png")}
-        name="Keisya Nabila"
-        cust_rating={4.9}
-        cust_review="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pellentesque tempor auctor. Nullam id cursus ligula."
+        name="Annisa Rahmapuri"
+        cust_review="Rasanya lebih dari sekadar memenuhi kebutuhan fisik,makanan ini menjadi perjalanan sensorik dan emosional yang memikat."
         />
 
                 {/* review 3 */}
                 <BoxReview 
         imageSource={require("../../assets/nopic.png")}
-        name="Keisya Nabila"
-        cust_rating={4.9}
-        cust_review="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam pellentesque tempor auctor. Nullam id cursus ligula."
+        name="Nathania Ellirica"
+        cust_review="Saya bisa merasakan kedalaman dan kompleksitas cita rasa, memberikan penghormatan kepada bahan-bahan dasar yang digunakan."
         />
                 {/* review 4 */}
                 <BoxReview 

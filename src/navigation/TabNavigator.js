@@ -9,7 +9,7 @@ import { useIsFocused } from "@react-navigation/native";
 // Screens
 import Explore from "../screens/Explore";
 import Profile from "../screens/Profile";
-import Bookmark from "../screens/Bookmark";
+import Bookmark from "../screens/Isibookmark";
 
 // Screen names
 const bookmarkFitur = "Bookmark";

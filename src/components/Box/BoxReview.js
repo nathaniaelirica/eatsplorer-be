@@ -27,10 +27,10 @@ const BoxRestoCustomerReview = ({ imageSource, name, cust_review, cust_rating, i
           <Image source={{ uri: isCameraImage }} style={{ height: 100, width: 100, marginTop: 10 }} />
         )}
       </View>
-      <TouchableOpacity onPress={onDelete} style={{ alignSelf: 'flex-end', marginTop: 10, marginRight: 10 }}>
+      {/* <TouchableOpacity onPress={onDelete} style={{ alignSelf: 'flex-end', marginTop: 10, marginRight: 10 }}>
         <Text style={{ color: 'red' }}>Delete</Text>
         
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };

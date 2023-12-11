@@ -27,19 +27,18 @@ export default function Isibookmark({ navigation }) {
         <View className="flex-col justify-between">
           {/* bookmark 1 */}
          <BoxIsibookmark 
-         imageSource={require("../../assets/fast_food.jpg")}
-         title="Burger King"
-         rating={4.9}
-         totalReviews={2369}
+         imageSource={require("../../assets/warkam.jpg")}
+         title="Warung Kampus"
+         rating={5}
          />
 
-           {/* bookmark 2 */}
+           {/* bookmark 2
            <BoxIsibookmark 
          imageSource={require("../../assets/fast_food.jpg")}
          title="Burger King"
          rating={4.9}
          totalReviews={2369}
-         />
+         /> */}
          
           
           {/* kolom */}

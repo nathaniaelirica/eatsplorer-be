@@ -120,8 +120,7 @@ const ReviewWithCommentInput = ({ navigation }) => {
               <React.Fragment key={index}>
                 <BoxReview
                   imageSource={require('../../assets/nopic.png')}
-                  name="Keisya Nabila"
-                  cust_rating={4.9}
+                  name="Me"
                   cust_review={item.comment}
                   isCameraImage={item.image}
                   onDelete={() => handleDelete(index)}
