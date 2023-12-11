@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import { Entypo } from "@expo/vector-icons";
 import BoxIsibookmark from "../components/Box/BoxIsibookmark";
 
 export default function Isibookmark({ navigation }) {
+  const [bookmarkedRestaurants, setBookmarkedRestaurants] = useState([]);
   return (
     <Background>
       <ScrollView>
@@ -44,6 +45,25 @@ export default function Isibookmark({ navigation }) {
           {/* kolom */}
         </View>
       </ScrollView>
+      <ScrollView>
+          {bookmarkedRestaurants.map((restaurant) => (
+            <View key={restaurant.id} className="restaurant-item">
+              <Text>Nama: {restaurant.title}</Text>
+              <Text>Alamat: {restaurant.street}</Text>
+              <Text>Cuisine: {restaurant.cuisine}</Text>
+              <TouchableOpacity
+                onPress={() => toggleBookmark(restaurant.id, bookmarkedRestaurants, setBookmarkedRestaurants)}
+                className="bookmark-button"
+              >
+                <Ionicons
+                  name={bookmarkedRestaurants.some((r) => r.id === restaurant.id) ? 'star' : 'star-outline'}
+                  size={20}
+                  color="yellow"
+                />
+              </TouchableOpacity>
+            </View>
+          ))}
+        </ScrollView>
     </Background>
   );
 }

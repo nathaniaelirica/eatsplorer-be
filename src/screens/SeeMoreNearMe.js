@@ -30,14 +30,22 @@ export default function SeeMoreNearMe({ navigation }) {
       <View className="flex flexcol py-2 items-center justify-center">
         {nearbyRestaurants.map((restaurant) => (
         <SeeMoreBox
-          imageSource={require('../../assets/fast_food.jpg')}
+          imageSource={{ uri: restaurant.imageUrl }}
           distance={restaurant.distance} 
           title={restaurant.title}
           price={88.5}
           rating={restaurant.rating}
           totalReviews={2395}
           backgroundColor="bg-yellow text-black"
-          onPress={() => navigation.navigate("restaurantpage")}
+          onPress={() => navigation.navigate("restaurantpage",
+          {
+            title: restaurant.title,
+            distance: restaurant.distance,
+            street: restaurant.street,
+            rate: restaurant.rating,
+            imageUrl : restaurant.imageUrl,
+            cuisine : restaurant.cuisine
+          })}
         />
         ))}
       </View>

@@ -25,6 +25,7 @@ import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 
 import Isibookmark from "../screens/Isibookmark";
+import Bookmark from "../screens/Bookmark";
 
 import Splash1 from "../screens/Splash1";
 import Splash2 from "../screens/Splash2";
@@ -148,6 +149,12 @@ function StackNavigator() {
                 <RootStack.Screen
                     name="isibookmark"
                     component={Isibookmark}
+                />
+            </RootStack.Group>
+            <RootStack.Group screenOptions={{ headerShown: false }}>
+                <RootStack.Screen
+                    name="Bookmark"
+                    component={Bookmark}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
