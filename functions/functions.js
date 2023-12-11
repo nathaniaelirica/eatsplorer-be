@@ -183,47 +183,6 @@ export const handleSearch = (searchQuery, setSearchResults) => {
   }
 };
 
-// export const getRestaurantsByCuisine = async (setRestaurantsByCuisine, selectedCategoryValue) => {
-//   try {
-//     onValue(dataRef, (snapshot) => {
-//       const data = snapshot.val();
-
-//       const restaurants = Object.keys(data).map((id) => ({
-//         id,
-//         title: data[id].title,
-//         street: data[id].street,
-//         cuisine: data[id].cuisine,
-//       }));
-
-//       // Memanggil fungsi selectCategory dengan menyediakan setRestaurantsByCuisine dan selectedCategory
-//       selectCategory(restaurants, setRestaurantsByCuisine, selectedCategoryValue);
-//     });
-//   } catch (error) {
-//     console.error('Error fetching restaurants by cuisine:', error);
-//   }
-// };
-
-// bisa
-// export const getRestaurantsByCuisine = async (setRestaurantsByCuisine, selectedCategory) => {
-//   try {
-//     onValue(dataRef, (snapshot) => {
-//       const data = snapshot.val();
-
-//       const restaurants = Object.keys(data).map((id) => ({
-//         id,
-//         title: data[id].title,
-//         street: data[id].street,
-//         cuisine: data[id].cuisine,
-//       }));
-
-//       // Memanggil fungsi selectCategory dengan menyediakan setRestaurantsByCuisine dan selectedCategory
-//       selectCategory(restaurants, setRestaurantsByCuisine, selectedCategory);
-//     });
-//   } catch (error) {
-//     console.error('Error fetching restaurants by cuisine:', error);
-//   }
-// };
-
 export const selectCategory = (restaurants, setRestaurantsByCuisine, selectedCategoryValue) => {
   
   console.log('Selected Category in selectCategory:', selectedCategoryValue);
@@ -263,5 +222,52 @@ export const getRestaurantsByCuisine = async (setRestaurantsByCuisine, selectedC
     });
   } catch (error) {
     console.error('Error fetching restaurants by cuisine:', error);
+  }
+};
+
+// export const fetchDataFromFirebase = (setRestaurants) => {
+//   try {
+//     onValue(dataRef, (snapshot) => {
+//       const data = snapshot.val();
+
+//       const restaurantsData = Object.keys(data).map((id) => ({
+//         id,
+//         title: data[id].title,
+//         street: data[id].street,
+//         cuisine: data[id].cuisine,
+//       }));
+
+//       setRestaurants(restaurantsData);
+//     });
+//   } catch (error) {
+//     console.error('Error fetching data from Firebase:', error);
+//   }
+// };
+
+export const toggleBookmark = (restaurant, bookmarkedRestaurants, setBookmarkedRestaurants) => {
+  try {
+    onValue(dataRef, (snapshot) => {
+      const data = snapshot.val();
+
+      const restaurantsData = Object.keys(data).map((id) => ({
+        id,
+        title: data[id].title,
+        street: data[id].street,
+        cuisine: data[id].cuisine,
+      }));
+
+      const isBookmarked = bookmarkedRestaurants.some((r) => r.id === restaurant.id);
+      if (isBookmarked) {
+        // Unbookmark the restaurant
+        const updatedBookmarks = bookmarkedRestaurants.filter((r) => r.id !== restaurant.id);
+        setBookmarkedRestaurants(updatedBookmarks);
+      } else {
+        // Bookmark the restaurant
+        const updatedBookmarks = [...bookmarkedRestaurants, restaurant];
+        setBookmarkedRestaurants(updatedBookmarks);
+      }
+    });
+  } catch (error) {
+    console.error('Error :', error);
   }
 };

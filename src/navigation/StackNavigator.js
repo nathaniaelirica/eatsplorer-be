@@ -25,6 +25,7 @@ import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 
 import Isibookmark from "../screens/Isibookmark";
+import Bookmark from "../screens/Bookmark";
 
 const RootStack = createNativeStackNavigator();
 
@@ -69,43 +70,43 @@ function StackNavigator() {
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="indonesianpage"
+                    name="Indonesianpage"
                     component={Indonesianpage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="japanesepage"
+                    name="Japanesepage"
                     component={Japanesepage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="westernpage"
+                    name="Westernpage"
                     component={Westernpage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="koreanpage"
+                    name="Koreanpage"
                     component={Koreanpage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="bakerypage"
+                    name="Bakerypage"
                     component={Bakerypage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="cafepage"
+                    name="Cafepage"
                     component={Cafepage}
                 />
             </RootStack.Group>
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
-                    name="dessertpage"
+                    name="Dessertpage"
                     component={Dessertpage}
                 />
             </RootStack.Group>
@@ -143,6 +144,12 @@ function StackNavigator() {
                 <RootStack.Screen
                     name="isibookmark"
                     component={Isibookmark}
+                />
+            </RootStack.Group>
+            <RootStack.Group screenOptions={{ headerShown: false }}>
+                <RootStack.Screen
+                    name="Bookmark"
+                    component={Bookmark}
                 />
             </RootStack.Group>
         </RootStack.Navigator>

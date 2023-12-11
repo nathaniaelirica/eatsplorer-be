@@ -121,8 +121,8 @@ export default function Explore({ navigation }) {
         </View>
         <ScrollView horizontal={true}>
           {nearbyRestaurants.slice(0, 5).map((restaurant) => (
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 4 }}>
-              <View key={restaurant.id} style={{ flex: 1, flexDirection: 'column', paddingVertical: 2 }}>
+            <View className="flex flex-row flex-wrap px-4">
+              <View key={restaurant.id} className="flex-1 flex flex-col py-2">
                 <ExploreTopRated
                   imageSource={require('../../assets/fast_food.jpg')}
                   distance={restaurant.distance} 
@@ -144,8 +144,8 @@ export default function Explore({ navigation }) {
         </View>
         <ScrollView horizontal={true}>
           {restaurantsByRate.slice(0, 5).map((restaurant) => (
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 4 }}>
-              <View key={restaurant.id} style={{ flex: 1, flexDirection: 'column', paddingVertical: 2 }}>
+            <View className="flex flex-row flex-wrap px-4">
+              <View key={restaurant.id} className="flex-1 flex flex-col py-2">
                 <ExploreTopRated
                   imageSource={require('../../assets/fast_food.jpg')}
                   distance={restaurant.distance}  
