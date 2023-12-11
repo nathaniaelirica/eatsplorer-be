@@ -147,7 +147,7 @@ export default function Explore({ navigation }) {
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 4 }}>
               <View key={restaurant.id} style={{ flex: 1, flexDirection: 'column', paddingVertical: 2 }}>
                 <ExploreTopRated
-                  imageSource={require('../../assets/fast_food.jpg')}
+                  imageSource={{ uri: restaurant.imageUrl }}
                   distance={restaurant.distance}  
                   title={restaurant.title}
                   price={88.5}

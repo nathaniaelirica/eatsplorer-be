@@ -6,14 +6,15 @@ import BoxDetailresto from "../components/Box/BoxDetailresto";
 import BoxLocResto from "../components/Box/BoxLocResto";
 import BoxRestoCustomerReview from "../components/Box/BoxRestoCustomerReview";
 
-export default function Restaurantpage({ navigation, title, address }) {
+export default function Restaurantpage({ route, navigation }) {
+  const { title, distance, street, rate, imageUrl, cuisine} = route.params;
   return (
     // <Background>
     <View>
       <ScrollView>
         <View className="relative">
           <Image
-            source={require("../../assets/fast_food.jpg")}
+            source={{ uri: imageUrl }}
             className="w-full h-96 top-0"
           />
           <TouchableOpacity
@@ -31,11 +32,11 @@ export default function Restaurantpage({ navigation, title, address }) {
             style={{ borderTopLeftRadius: 40, borderTopRightRadius: 40 }}
             className="bg-white -mt-6 pt-6">
 
-             <View className="absolute -top-9 rounded-full border-solid border-white border-8 bg-white left-[152px]">
+             {/* <View className="absolute -top-9 rounded-full border-solid border-white border-8 bg-white left-[152px]">
              <BoxDetailresto 
              imageSource={require("../../assets/bkicon.png")}
              />
-            </View>
+            </View> */}
 
             <View className="flex-col px-5">
               <View className="flex-row">
@@ -45,7 +46,7 @@ export default function Restaurantpage({ navigation, title, address }) {
                       Western Cuisine
                     </Text> */}
                     <BoxDetailresto 
-                    category="Western Cuisine"
+                    category={cuisine}
                     />
                   </View>
                 </View>
@@ -60,14 +61,14 @@ export default function Restaurantpage({ navigation, title, address }) {
                 </TouchableOpacity>
               </View>
               <BoxDetailresto 
-              title="Burger King"
-              address="Jl. Kutisari Indah Utara 2"
+              title={title}
+              address={street}
               />
 
               <ScrollView horizontal={true}>
                 <BoxLocResto 
-                distance="5"
-                rating={4.9}
+                distance={distance}
+                rating={rate}
                 totalReviews={2359}
                 open_hour="08.00-21.00"
                 range_harga="20rb-50rb"
@@ -93,25 +94,22 @@ export default function Restaurantpage({ navigation, title, address }) {
                     imageSource={require("../../assets/nopic.png")}
                     name="Keisya Nabila"
                     cust_rating={4.9}
-                    cust_review="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Nam pellentesque tempor auctor. Nullam id cursus ligula."
+                    cust_review="Saya sungguh menikmati pengalaman rasa yang luar biasa ketika pertama kali menyentuh lidah saya."
                   />
                   {/* review 2 */}
                   <BoxRestoCustomerReview
                     imageSource={require("../../assets/nopic.png")}
-                    name="Keisya Nabila"
-                    cust_rating={4.9}
-                    cust_review="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Nam pellentesque tempor auctor. Nullam id cursus ligula."
+                    name="Nathania Ellirica"
+                    cust_rating={4.5}
+                    cust_review=" Saya bisa merasakan kedalaman dan kompleksitas cita rasa, memberikan penghormatan kepada bahan-bahan dasar yang digunakan."
                   />
 
                   {/* review 3 */}
                   <BoxRestoCustomerReview
                     imageSource={require("../../assets/nopic.png")}
-                    name="Keisya Nabila"
-                    cust_rating={4.9}
-                    cust_review="Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Nam pellentesque tempor auctor. Nullam id cursus ligula."
+                    name="Annisa Rahmapuri"
+                    cust_rating={4.7}
+                    cust_review="Rasanya lebih dari sekadar memenuhi kebutuhan fisik,makanan ini menjadi perjalanan sensorik dan emosional yang memikat."
                   />
                 </View>
               </ScrollView>
