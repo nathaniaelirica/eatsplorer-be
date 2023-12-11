@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 
 const FoodSelectionCircle = ({ imageSource, buttonText, onPress }) => {
   return (
-    <View className="flex-1 m-2  ">
+    <View className="flex-1 m-2">
       <View className="flex flex-col">
         <TouchableOpacity className="rounded-full overflow-hidden" onPress={onPress}>
           <Image

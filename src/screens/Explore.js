@@ -74,7 +74,6 @@ export default function Explore({ navigation }) {
         />
       </TouchableOpacity>
       <ScrollView horizontal={true}>
-      <ScrollView horizontal={true}>
         <View className="flex flex-row">
           {categories.map((category) => (
             <FoodSelectionCircle
@@ -93,23 +92,6 @@ export default function Explore({ navigation }) {
           ))}
         </View>
       </ScrollView>
-      {/* <ScrollView horizontal={true}>
-        <View className="flex flex-row">
-          {categories.map((category) => (
-            <FoodSelectionCircle
-              key={category.id}
-              onPress={() => {
-                setSelectedCategory(category.text);
-                navigation.navigate(`${category.id}page`);
-              }}
-              imageSource={category.imageSource}
-              buttonText={category.text}
-            />
-          ))}
-        </View>
-      </ScrollView> */}
-
-      </ScrollView>
 
       {/* Near Me */}
 
@@ -121,8 +103,8 @@ export default function Explore({ navigation }) {
         </View>
         <ScrollView horizontal={true}>
           {nearbyRestaurants.slice(0, 5).map((restaurant) => (
-            <View className="flex flex-row flex-wrap px-4">
-              <View key={restaurant.id} className="flex-1 flex flex-col py-2">
+            <View className="flex flex-row py-2 px-1">
+              <View key={restaurant.id} className="flex flexcol py-2">
                 <ExploreTopRated
                   imageSource={require('../../assets/fast_food.jpg')}
                   distance={restaurant.distance} 
@@ -144,8 +126,8 @@ export default function Explore({ navigation }) {
         </View>
         <ScrollView horizontal={true}>
           {restaurantsByRate.slice(0, 5).map((restaurant) => (
-            <View className="flex flex-row flex-wrap px-4">
-              <View key={restaurant.id} className="flex-1 flex flex-col py-2">
+            <View className="flex flex-row py-2 px-1">
+              <View key={restaurant.id} className="flex flexcol py-2">
                 <ExploreTopRated
                   imageSource={{ uri: restaurant.imageUrl }}
                   distance={restaurant.distance}  

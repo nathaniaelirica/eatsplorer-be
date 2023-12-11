@@ -27,6 +27,11 @@ import Signup from "../screens/Signup";
 import Isibookmark from "../screens/Isibookmark";
 import Bookmark from "../screens/Bookmark";
 
+import Splash1 from "../screens/Splash1";
+import Splash2 from "../screens/Splash2";
+import Splash3 from "../screens/Splash3";
+
+
 const RootStack = createNativeStackNavigator();
 
 function StackNavigator() {
@@ -150,6 +155,24 @@ function StackNavigator() {
                 <RootStack.Screen
                     name="Bookmark"
                     component={Bookmark}
+                />
+            </RootStack.Group>
+            <RootStack.Group screenOptions={{ headerShown: false }}>
+                <RootStack.Screen
+                    name="splash1"
+                    component={Splash1}
+                />
+            </RootStack.Group>
+            <RootStack.Group screenOptions={{ headerShown: false }}>
+                <RootStack.Screen
+                    name="splash2"
+                    component={Splash2}
+                />
+            </RootStack.Group>
+            <RootStack.Group screenOptions={{ headerShown: false }}>
+                <RootStack.Screen
+                    name="splash3"
+                    component={Splash3}
                 />
             </RootStack.Group>
         </RootStack.Navigator>
