@@ -6,12 +6,13 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  KeyboardAvoidingView
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { signIn } from "../../functions/functions.js";
 
-export default function App() {
+export default function Login({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -24,7 +25,7 @@ export default function App() {
       if (loginResult.user) {
         // Handle login berhasil
         setSuccessMessage('Login successful!');
-        // Navigasi atau logika setelah login berhasil
+        navigation.navigate("review2"); // Move the navigation here
       } else {
         setError(`Error: ${loginResult.errorCode} - ${loginResult.errorMessage}`);
       }
@@ -34,7 +35,7 @@ export default function App() {
   };
 
   return (
-    // <LoginBackground>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <View>
       <ScrollView>
         <View className="relative bg-[#FEDB71]">
@@ -51,17 +52,17 @@ export default function App() {
             </TouchableOpacity>
           </View>
 
-          <View className="flex-row justify-center top-48">
+          <View className="flex-row justify-center top-36">
             <Image
               source={require("../../assets/login3.png")}
-              style={{ width: 300, height: 200 }}
+              style={{ width: 350, height: 250 }}
             />
           </View>
 
           {/* coba */}
           <View
             style={{ borderTopLeftRadius: 50, borderTopRightRadius: 50 }}
-            className="flex-1 bg-white px-8 pt-8 mt-72 ">
+            className="flex-1 bg-white px-8 pt-8 mt-44">
             {/* kolom email dkk */}
             <View className="flex flex-col">
               <View className="form space-y-2">
@@ -69,7 +70,6 @@ export default function App() {
                 <TextInput
                   className="p-4 bg-[#EFF1F3] text-black rounded-2xl mb-3"
                   placeholder="Email"
-                  // value="john@gmail.com"
                   value={email}
                   onChangeText={(text) => setEmail(text)}
                 />
@@ -78,18 +78,28 @@ export default function App() {
                   className="p-4 bg-[#EFF1F3] text-black rounded-2xl"
                   secureTextEntry
                   placeholder="Password"
-                  // value="test12345"
                   value={password}
                   onChangeText={(text) => setPassword(text)}
                 />
+                {/* Display success message */}
+                {successMessage && (
+                  <View className="mt-2">
+                    <Text style={{ color: 'green' }}>{successMessage}</Text>
+                  </View>
+                )}
 
+                {/* Display error message */}
+                {error && (
+                  <View className="mt-2">
+                    <Text style={{ color: 'red' }}>{error}</Text>
+                  </View>
+                )}
                 {/* button login */}
                 <View className="mt-4">
                   <TouchableOpacity
                     className="mt-4 py-3 bg-[#FFCF00] rounded-xl"
                     onPress={() => {
-                      handleLogin(); // Call the handleLogin function
-                      navigation.navigate("review2");
+                      handleLogin();
                     }}>
                     <Text className="text-xl font-bold text-center items-center justify-center text-white">
                       Login
@@ -113,6 +123,6 @@ export default function App() {
         </View>
       </ScrollView>
     </View>
-    // </LoginBackground>
+    </KeyboardAvoidingView>
   );
 }

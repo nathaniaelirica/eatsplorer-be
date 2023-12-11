@@ -1,47 +1,38 @@
-import * as React from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  Image,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React from "react";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-const BoxRestoCustomerReview = ({ imageSource, name, cust_review, cust_rating}) => {
-    return (
-        <View className="mt-4 ml-4 rounded-xl shadow-xl p-3 h-52 w-64 border-2 border-white bg-white">
-        <View className="flex-row mx-3 items-center ">
-          <View className="rounded-full overflow-hidden">
-            <Image
-              source={imageSource}
-              className="h-14 w-14"
-            />
-          </View>
-          <Text className="text-center text-s font-inter font-semibold mt-1 mx-4">
-            {name}
-          </Text>
-          <View className="flex flex-row mt-1 ">
-            <Entypo
-              name="star"
-              size={17}
-              color="#FDC83D"
-            />
-            <Text className="text-xs mx-1 text-center font-bold text-[#9CA3AF]">
-              {cust_rating}
-            </Text>
-          </View>
+const BoxRestoCustomerReview = ({ imageSource, name, cust_review, cust_rating, isCameraImage, onDelete }) => {
+  return (
+    <View style={{ margin: 10, borderRadius: 10, overflow: 'hidden', backgroundColor: 'white' }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 10 }}>
+        <View style={{ borderRadius: 50, overflow: 'hidden' }}>
+          <Image source={imageSource} style={{ height: 56, width: 56 }} />
         </View>
-        <View className="flex flex-col mx-3 mt-2 items-center">
-          <Text className="text-justify text-xs font-Inter font-normal mt-1">
-            {cust_review}
+        <Text style={{ textAlign: 'center', fontSize: 14, fontWeight: 'bold', marginLeft: 10 }}>
+          {name}
+        </Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 10 }}>
+          <Entypo name="star" size={17} color="#FDC83D" />
+          <Text style={{ fontSize: 12, marginLeft: 5, color: '#9CA3AF' }}>
+            {cust_rating}
           </Text>
         </View>
       </View>
+      <View style={{ margin: 10, alignItems: 'center' }}>
+        <Text style={{ fontSize: 12, textAlign: 'justify' }}>
+          {cust_review}
+        </Text>
+        {isCameraImage && (
+          <Image source={{ uri: isCameraImage }} style={{ height: 100, width: 100, marginTop: 10 }} />
+        )}
+      </View>
+      <TouchableOpacity onPress={onDelete} style={{ alignSelf: 'flex-end', marginTop: 10, marginRight: 10 }}>
+        <Text style={{ color: 'red' }}>Delete</Text>
+        
+      </TouchableOpacity>
+    </View>
+  );
+};
 
-        );
-    };
-    
 export default BoxRestoCustomerReview;

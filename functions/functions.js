@@ -30,7 +30,9 @@ export const getRestaurantsByRate = async (setRestaurantsByRate) => {
         title: data[id].title,
         street: data[id].street,
         rating: data[id].rate,
-        distance: data[id].distance
+        distance: data[id].distance,
+        imageUrl: data[id].imageUrl,
+        cuisine: data[id].cuisine
       }));
 
       const sortedRestaurants = restaurants.sort((a, b) => b.rating - a.rating);

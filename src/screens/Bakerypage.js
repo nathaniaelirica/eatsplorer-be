@@ -32,14 +32,22 @@ export default function Bakerypage({ navigation }) {
           {restaurantsByCuisine.map((restaurant) => (
             <SeeMoreBox
               key={restaurant.id}
-              imageSource={require('../../assets/fast_food.jpg')}
+              imageSource={{ uri: restaurant.imageUrl }}
               distance={restaurant.distance} 
               title={restaurant.title}
               price={88.5}
               rating={restaurant.rating}
               totalReviews={2395}
               backgroundColor="bg-yellow text-black"
-              onPress={() => navigation.navigate("restaurantpage")}
+              onPress={() => navigation.navigate("restaurantpage",
+              {
+                title: restaurant.title,
+                distance: restaurant.distance,
+                street: restaurant.street,
+                rate: restaurant.rating,
+                imageUrl : restaurant.imageUrl,
+                cuisine : restaurant.cuisine
+              })}
             />
             ))}
       </View>
