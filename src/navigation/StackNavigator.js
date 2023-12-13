@@ -36,7 +36,7 @@ const RootStack = createNativeStackNavigator();
 
 function StackNavigator() {
     return (
-        <RootStack.Navigator initialRouteName="main">
+        <RootStack.Navigator initialRouteName="splash1">
             <RootStack.Group screenOptions={{ headerShown: false }}>
                 <RootStack.Screen
                     name="main"
